@@ -27,7 +27,7 @@ export default class Home extends Component{
     addCart = () => {
         axios
 
-            .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
+            .post('http://localhost/yummypizza/public/api/storecart', this.state.good, {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',

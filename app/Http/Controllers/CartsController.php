@@ -18,11 +18,11 @@ use DB;
 class CartsController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-        // $this->middleware('cors');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    //     // $this->middleware('cors');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +30,8 @@ class CartsController extends Controller
      */
     public function index()
     {
-        $user = User::find(auth::user()->id);
+        // $user = User::find(auth::user()->id);
+        $user = User::find(1);
         
         // $carts = cart::orderBy('carts.updated_at', 'desc')->paginate(20);
         // $carts = cart::orderBy('carts.updated_at', 'desc')
@@ -85,7 +86,8 @@ class CartsController extends Controller
         $good = Good::find($id);
 
         $cart = new Cart;
-        $cart->user_id = auth()->user()->id;
+        // $cart->user_id = auth()->user()->id;
+        $cart->user_id = 1;
         $cart->good_id = $good->id;
         
         $cart->save();
@@ -104,7 +106,7 @@ class CartsController extends Controller
     {
         $cart = Cart::find($id);
 
-        $user = User::find($id);
+        // $user = User::find($id);
 
         $carts = Cart::all();
 
@@ -114,7 +116,7 @@ class CartsController extends Controller
         $cart_data = [
             'cart' => $cart,
             'carts' => $carts,
-            'user' => $user,
+            // 'user' => $user,
             'reviews' => $reviews,
         ];
 
@@ -170,7 +172,7 @@ class CartsController extends Controller
     public function clear()
     {
         $cart = Cart::orderBy('carts.updated_at', 'desc')
-        ->where('cart.user_id', $user->id)
+        ->where('carts.user_id', $user->id)
         ->paginate(20);
         // $cart->delete();
         // return response()->json($cart, 200);
