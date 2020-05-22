@@ -51,7 +51,7 @@ export default class Home extends Component{
 
     componentDidMount(){
         // this._isMounted = true;
-        var a=localStorage.getItem("authen");
+        // var a=localStorage.getItem("authen");
         axios
 
             // .get('http://localhost/yummypizza/public/api', {
@@ -60,7 +60,7 @@ export default class Home extends Component{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
                     // 'Authorization': 'Bearer '+$accessToken,
-                    'Authorization': 'Bearer '+a,
+                    // 'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })

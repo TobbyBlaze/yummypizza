@@ -12,9 +12,9 @@ export default class Signout extends Component {
     submitHandler = e => {
         e.preventDefault()
         console.log(this.state)
-        console.log($('meta[name="csrf-token"]').attr('content'))
-        var a=localStorage.getItem("authen");
-        console.log(a)
+        // console.log($('meta[name="csrf-token"]').attr('content'))
+        // var a=localStorage.getItem("authen");
+        // console.log(a)
 
         axios
             // .get('http://127.0.0.1:8000/api/auth/logout',{
@@ -23,7 +23,7 @@ export default class Signout extends Component {
 
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+a,
+                    // 'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })

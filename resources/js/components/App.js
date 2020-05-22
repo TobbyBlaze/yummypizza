@@ -19,7 +19,7 @@ export default class App extends Component {
                     {/* <Header /> */}
                     <Switch>
                         {/* <Route exact path='/Corover/public/' component={Country} /> */}
-                        <Route exact path='/yummypizza/public/' component={Home} />
+                        <Route exact path='/' component={Home} />
                         <Route exact path='/yummypizza/public/prdetails' component={PrDetails} />
                         <Route exact path='/yummypizza/public/shcart' component={ShCart} />
                         <Route exact path='/yummypizza/public/checkout' component={Checkout} />

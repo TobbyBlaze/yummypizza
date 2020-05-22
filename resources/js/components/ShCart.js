@@ -28,7 +28,7 @@ export default class ShCart extends Component{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
                     // 'Authorization': 'Bearer '+a,
-                    'Authorization': 'Bearer '.$accessToken,
+                    // 'Authorization': 'Bearer '.$accessToken,
                     // 'withCredentials': true
                 }
             })
