@@ -39,7 +39,8 @@ export default class Login extends Component {
         console.log(this.state)
 
         axios
-            .post('http://localhost/yummypizza/public/api/auth/login', this.state)
+            // .post('http://localhost/yummypizza/public/api/auth/login', this.state)
+            .post('https://damp-island-72638.herokuapp.com/api/auth/login', this.state)
             .then(response => {
                 console.log(response);
                 var authe = response.data.token;

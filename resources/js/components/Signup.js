@@ -45,7 +45,8 @@ export default class Signup extends Component {
 
         axios
             // .post('localhost/yummypizza/public/api/auth/signup', this.state)
-            .post('http://localhost/yummypizza/public/api/auth/signup', this.state)
+            // .post('http://localhost/yummypizza/public/api/auth/signup', this.state)
+            .post('https://damp-island-72638.herokuapp.com/api/auth/signup', this.state)
             // , {
             //     headers: {
 

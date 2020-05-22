@@ -22,7 +22,8 @@ export default class ShCart extends Component{
         // var a=localStorage.getItem("authen");
         axios
 
-            .get('http://localhost/yummypizza/public/api/auth/cart', {
+            // .get('http://localhost/yummypizza/public/api/auth/cart', {
+                .get('https://damp-island-72638.herokuapp.com/api/auth/cart', {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',

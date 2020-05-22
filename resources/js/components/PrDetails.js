@@ -28,7 +28,8 @@ export default class PrDetails extends Component{
     addCart = () => {
         axios
 
-            .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
+            // .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
+                .post('https://damp-island-72638.herokuapp.com/api/auth/storecart', this.state.good, {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
@@ -52,7 +53,8 @@ export default class PrDetails extends Component{
     componentDidMount(){
         axios
 
-            .get('http://localhost/yummypizza/public/api/prdetails/', {
+            // .get('http://localhost/yummypizza/public/api/prdetails/', {
+                .get('https://damp-island-72638.herokuapp.com/api/prdetails/', {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',

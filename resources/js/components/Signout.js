@@ -17,7 +17,8 @@ export default class Signout extends Component {
         console.log(a)
 
         axios
-            .get('http://127.0.0.1:8000/api/auth/logout',{
+            // .get('http://127.0.0.1:8000/api/auth/logout',{
+                .get('https://damp-island-72638.herokuapp.com/api/auth/logout',{
                 headers: {
 
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
