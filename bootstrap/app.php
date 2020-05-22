@@ -41,6 +41,12 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+header('Access-Control-Allow-Origin: *');
+// header('X-CSRF-TOKEN: gfrbgfn');
+
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-CSRF-TOKEN, Authorization');
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

@@ -12,4 +12,19 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
+// require('./components/Country');
+
+require('./components/Signup');
+require('./components/Login');
+require('./components/Signout');
+
+require('./components/Home');
+
+require('./components/App');
+require('./components/AppHome');
+require('./components/Header');
+require('./components/HeaderHome');
+require('./components/Footer');
+require('./components/ShCart');
+require('./components/PrDetails');
+require('./components/Checkout');
