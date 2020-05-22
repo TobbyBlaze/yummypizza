@@ -25,8 +25,8 @@ const Header = () => (
                             <span>Hello user</span>
                             <div className="dropdown-content">
                                 <ul className="header__menu__dropdown">
-                                    <li><Link to="/yummypizza/public/shcart">Shoping Cart</Link></li>
-                                    <li><Link to="/yummypizza/public/checkout">Check Out</Link></li>
+                                    <li><Link to="/shcart">Shoping Cart</Link></li>
+                                    <li><Link to="/checkout">Check Out</Link></li>
                                 </ul>
                             </div>
                         </div>

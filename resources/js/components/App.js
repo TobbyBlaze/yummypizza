@@ -16,15 +16,15 @@ export default class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Header />
+                    {/* <Header /> */}
                     <Switch>
                         {/* <Route exact path='/Corover/public/' component={Country} /> */}
-                        <Route exact path='./' component={Home} />
-                        <Route exact path='/yummypizza/public/prdetails' component={PrDetails} />
-                        <Route exact path='/yummypizza/public/shcart' component={ShCart} />
-                        <Route exact path='/yummypizza/public/checkout' component={Checkout} />
-                        <Route exact path='/yummypizza/public/login' component={Login} />
-                        <Route exact path='/yummypizza/public/signup' component={Signup} />
+                        <Route exact path='/' component={Home} />
+                        <Route exact path='/prdetails' component={PrDetails} />
+                        <Route exact path='/shcart' component={ShCart} />
+                        <Route exact path='/checkout' component={Checkout} />
+                        <Route exact path='/login' component={Login} />
+                        <Route exact path='/signup' component={Signup} />
                     </Switch>
                     {/* <Footer /> */}
                 </div>

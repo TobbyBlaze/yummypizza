@@ -25,8 +25,8 @@ const HeaderHome = () => (
                             <span>Hello user</span>
                             <div className="dropdown-content">
                                 <ul className="header__menu__dropdown">
-                                    <li><Link to="/yummypizza/public/login">Log in</Link></li>
-                                    <li><Link to="/yummypizza/public/signup">Sign up</Link></li>
+                                    <li><Link to="/login">Log in</Link></li>
+                                    <li><Link to="/signup">Sign up</Link></li>
                                 </ul>
                             </div>
                         </div>
