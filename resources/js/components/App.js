@@ -16,7 +16,7 @@ export default class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    {/* <Header /> */}
+                    <Header />
                     <Switch>
                         {/* <Route exact path='/Corover/public/' component={Country} /> */}
                         <Route exact path='./' component={Home} />
