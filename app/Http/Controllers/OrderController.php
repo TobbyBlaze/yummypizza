@@ -12,6 +12,7 @@ use App\Cart;
 use App\Review;
 use App\User;
 use App\Order;
+use App\OrderProduct;
 use App\Notifications\NewReview;
 use App\Notifications\NewCart;
 use Auth;
@@ -67,12 +68,50 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         // $cart = Cart::find($id);
+        $user = User::find(auth::user()->id);
+        // $user = User::find(1);
+
+        $this->validate($request, ['name' => 'required']);
 
         $order = new Order;
-        $order->user_id = auth()->user()->id;
-        // $order->cart_id = $cart->id;
+        // $order->name = $request->input('name');
+        // $order->user_id = auth()->user()->id;
+
+        $order->user_id = 1;
+        $order->first_name = $request->input('first_name');
+        $order->last_name = $request->input('last_name');
+        $order->country = $request->input('country');
+        $order->address1 = $request->input('address1');
+        $order->address2 = $request->input('address2');
+        $order->city = $request->input('city');
+        $order->state = $request->input('state');
+        $order->zip = $request->input('zip');
+        $order->phone = $request->input('phone');
+        $order->email = $request->input('email');
         
+        // $order->user_id = 1;
+    
         $order->save();
+
+        foreach ($request->input('good_id') as $sin_good_id){
+            $good_data[] = $sin_good_id;
+        }
+        foreach ($request->input('quantity') as $sin_quantity){
+            $quantity_data[] = $sin_quantity;
+        }
+
+        $orderProduct = new OrderProduct;
+        $orderProduct->order_id = $order->id;
+        $orderProduct->good_id = $good_data;
+        $orderProduct->quantity = $quantity_data;
+
+        $orderProduct->save();
+
+        $cart = Cart::orderBy('carts.updated_at', 'desc')
+        // ->where('carts.user_id', $user->id)
+        ->paginate(100);
+
+        $cart->delete();
 
         // return redirect('/')->with('success', 'cart created successfully');
         return response()->json($order, 201);

@@ -25,23 +25,20 @@ export default class Home extends Component{
     }
 
     addCart = () => {
+        var a=localStorage.getItem("authen");
         axios
 
-            // .post('http://localhost/yummypizza/public/api/storecart', this.state.good, {
-                .post('https://damp-island-72638.herokuapp.com/api/storecart', this.state.good, {
+            .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
+                // .post('https://damp-island-72638.herokuapp.com/api/storecart', this.state.good, {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    // 'Authorization': 'Bearer '+a,
+                    'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })
             .then(response => {
-                console.log(response.data.goods.data)
-                this.setState({ goods: response.data.goods.data })
-                // if (this._isMounted) {
-                    // this.setState({ goods: response.data.goods.data })
-                // }
+                console.log(response)
             })
             .catch(error => {
                 console.log(error)
@@ -51,16 +48,17 @@ export default class Home extends Component{
 
     componentDidMount(){
         // this._isMounted = true;
-        // var a=localStorage.getItem("authen");
+        var a=localStorage.getItem("authen");
         axios
 
-            // .get('http://localhost/yummypizza/public/api', {
-                .get('https://damp-island-72638.herokuapp.com/api', {
+            .get('http://localhost/yummypizza/public/api/auth', {
+                // .get('https://damp-island-72638.herokuapp.com/api', {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
+                    // 'Authorization': 'Bearer '+${token},
                     // 'Authorization': 'Bearer '+$accessToken,
-                    // 'Authorization': 'Bearer '+a,
+                    'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })
@@ -110,27 +108,27 @@ export default class Home extends Component{
                             <div className="categories__slider owl-carousel">
                                 <div className="col-lg-3">
                                     <div className="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
-                                        <h5><Link to="#">Fresh Fruit</Link></h5>
+                                        <h5><Link to="">St. Louis Pizza</Link></h5>
                                     </div>
                                 </div>
                                 <div className="col-lg-3">
                                     <div className="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
-                                        <h5><Link to="#">Dried Fruit</Link></h5>
+                                        <h5><Link to="">Detroit Pizza</Link></h5>
                                     </div>
                                 </div>
                                 <div className="col-lg-3">
                                     <div className="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
-                                        <h5><Link to="#">Vegetables</Link></h5>
+                                        <h5><Link to="">California Pizza</Link></h5>
                                     </div>
                                 </div>
                                 <div className="col-lg-3">
                                     <div className="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
-                                        <h5><Link to="#">drink fruits</Link></h5>
+                                        <h5><Link to="">Greek Pizza</Link></h5>
                                     </div>
                                 </div>
                                 <div className="col-lg-3">
                                     <div className="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
-                                        <h5><Link to="#">drink fruits</Link></h5>
+                                        <h5><Link to="">Sicilian Pizza</Link></h5>
                                     </div>
                                 </div>
                             </div>
@@ -150,10 +148,10 @@ export default class Home extends Component{
                                 <div className="featured__controls">
                                     <ul>
                                         <li className="active" data-filter="*">All</li>
-                                        <li data-filter=".oranges">Oranges</li>
-                                        <li data-filter=".fresh-meat">Fresh Meat</li>
-                                        <li data-filter=".vegetables">Vegetables</li>
-                                        <li data-filter=".fastfood">Fastfood</li>
+                                        <li data-filter=".oranges">St. Louis Pizza</li>
+                                        <li data-filter=".fresh-meat">Detroit Pizza</li>
+                                        <li data-filter=".vegetables">California Pizza</li>
+                                        <li data-filter=".fastfood">Greek Pizza</li>
                                     </ul>
                                 </div>
                             </div>
@@ -164,17 +162,16 @@ export default class Home extends Component{
                                 <div className="featured__item">
                                     <div className="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                                         <ul className="featured__item__pic__hover">
-                                            <li><Link to="#"><i className="fa fa-heart"></i></Link></li>
-                                            <li><Link to="" onClick={this.addcart}><i className="fa fa-shopping-cart"></i></Link></li>
+                                            <li><Link to=""><i className="fa fa-heart"></i></Link></li>
+                                            <li><a href="api/storecart/{good.id.toString()}"><i className="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div className="featured__item__text">
                                         <div key={i}>
                                         <h6><Link to={good.id.toString()}>{good.name}</Link></h6>
-                                        <h5>$30.00</h5>
+                                        <h5>{good.price}</h5>
                                         
-                                            {good.name}
-                                            <li><Link to={good.name}><i className="fa fa-heart"></i></Link></li>
+                                            {/* <li><Link to={good.name}><i className="fa fa-heart"></i></Link></li> */}
                                         </div>
                                     </div>
                                 </div>

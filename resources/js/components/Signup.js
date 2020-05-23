@@ -18,22 +18,6 @@ export default class Signup extends Component {
         }
     }
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         user : {
-    //             name: '',
-    //             first_name: '',
-    //             last_name: '',
-    //             reg_no: '',
-    //             email: '',
-    //             password: '',
-    //             confirm_password: '',
-    //             phone_number_1: '',
-    //         },
-    //     };
-    // }
-
     changeHandler = e => {
         // this.setState({[e.target.name]: e.target.value})
         this.setState({ [e.target.name]: e.target.value })
@@ -45,20 +29,20 @@ export default class Signup extends Component {
 
         axios
             // .post('localhost/yummypizza/public/api/auth/signup', this.state)
-            // .post('http://localhost/yummypizza/public/api/auth/signup', this.state)
-            .post('https://damp-island-72638.herokuapp.com/api/auth/signup', this.state)
-            // , {
-            //     headers: {
+            .post('http://localhost/yummypizza/public/api/auth/signup', this.state
+            // .post('https://damp-island-72638.herokuapp.com/api/auth/signup', this.state)
+            , {
+                headers: {
 
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            //         // 'X-CSRF-TOKEN': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
-            //         'Content-Type': 'application/json',
-            //         // 'x-rapidapi-host': 'covid-193.p.rapidapi.com',
-            //         // 'x-rapidapi-key': '8cfca8918dmsh742a6ebe24cf1c7p1af6e3jsn3bfa6e435b76',
-            //         // 'Authorization': 'Bearer '+a,
-            //         // 'withCredentials': true
-            //     }
-            // })
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    // 'X-CSRF-TOKEN': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
+                    'Content-Type': 'application/json',
+                    // 'x-rapidapi-host': 'covid-193.p.rapidapi.com',
+                    // 'x-rapidapi-key': '8cfca8918dmsh742a6ebe24cf1c7p1af6e3jsn3bfa6e435b76',
+                    // 'Authorization': 'Bearer '+a,
+                    // 'withCredentials': true
+                }
+            })
             .then(response => {
                 console.log(response)
             })

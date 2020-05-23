@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Signout from './Signout';
 
 const Header = () => (
     <div>
@@ -13,7 +14,7 @@ const Header = () => (
             <div className="row">
                 <div className="col-lg-3">
                     <div className="header__logo">
-                        <Link to="./index.html"><img src="img/logo.png" alt="" /></Link>
+                        <Link to=""><img src="img/logo.png" alt="" /></Link>
                     </div>
                 </div>
                 <div className="col-lg-6">
@@ -25,8 +26,11 @@ const Header = () => (
                             <span>Hello user</span>
                             <div className="dropdown-content">
                                 <ul className="header__menu__dropdown">
-                                    <li><Link to="/shcart">Shoping Cart</Link></li>
-                                    <li><Link to="/checkout">Check Out</Link></li>
+                                    <li><Link to="/yummypizza/public/shcart">Shoping Cart</Link></li>
+                                    <li><Link to="/yummypizza/public/checkout">Check Out</Link></li>
+                                    <li>
+                                        <Signout />
+                                    </li>
                                 </ul>
                             </div>
                         </div>

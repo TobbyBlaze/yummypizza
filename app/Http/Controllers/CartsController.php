@@ -86,8 +86,8 @@ class CartsController extends Controller
         $good = Good::find($id);
 
         $cart = new Cart;
-        // $cart->user_id = auth()->user()->id;
-        $cart->user_id = 1;
+        $cart->user_id = auth()->user()->id;
+        // $cart->user_id = 1;
         $cart->good_id = $good->id;
         
         $cart->save();

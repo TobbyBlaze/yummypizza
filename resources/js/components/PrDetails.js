@@ -26,14 +26,15 @@ export default class PrDetails extends Component{
     }
 
     addCart = () => {
+        var a=localStorage.getItem("authen");
         axios
 
-            // .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
-                .post('https://damp-island-72638.herokuapp.com/api/auth/storecart', this.state.good, {
+            .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
+                // .post('https://damp-island-72638.herokuapp.com/api/auth/storecart', this.state.good, {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    // 'Authorization': 'Bearer '+a,
+                    'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })
@@ -51,14 +52,15 @@ export default class PrDetails extends Component{
     }
 
     componentDidMount(){
+        var a=localStorage.getItem("authen");
         axios
 
-            // .get('http://localhost/yummypizza/public/api/prdetails/', {
-                .get('https://damp-island-72638.herokuapp.com/api/prdetails/', {
+            .get('http://localhost/yummypizza/public/api/auth/prdetails/', {
+                // .get('https://damp-island-72638.herokuapp.com/api/prdetails/', {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    // 'Authorization': 'Bearer '+a,
+                    'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })
@@ -80,7 +82,7 @@ export default class PrDetails extends Component{
         const { goods, errorMsg } = this.state
         return(
             <div>
-                
+                <HeaderHome />
                 {/* <!-- Breadcrumb Section Begin --> */}
                 <section className="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
                     <div className="container">

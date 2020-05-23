@@ -19,15 +19,15 @@ export default class ShCart extends Component{
     }
 
     componentDidMount(){
-        // var a=localStorage.getItem("authen");
+        var a=localStorage.getItem("authen");
         axios
 
-            // .get('http://localhost/yummypizza/public/api/auth/cart', {
-                .get('https://damp-island-72638.herokuapp.com/api/auth/cart', {
+            .get('http://localhost/yummypizza/public/api/auth/shcart', {
+                // .get('https://damp-island-72638.herokuapp.com/api/auth/shcart', {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    // 'Authorization': 'Bearer '+a,
+                    'Authorization': 'Bearer '+a,
                     // 'Authorization': 'Bearer '.$accessToken,
                     // 'withCredentials': true
                 }

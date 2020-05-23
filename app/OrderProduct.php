@@ -4,28 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderProduct extends Model
 {
+    use Notifiable;
     //Table name
-    protected $table = 'orders';
+    protected $table = 'order_products';
     //Primary Key
     public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
 
     protected $fillable = [
-        // id,
-        name,
-        first_name,
-        last_name, 
-        country, 
-        address1, 
-        address2, 
-        city, 
-        state, 
-        zip, 
-        phone, 
-        email
+        // 'id',
+        'order_id',
+        'good_id',
+        'quantity',
     ];
 
     public function user(){
@@ -43,5 +36,4 @@ class Order extends Model
     // public function carts(){
     //     return $this->hasMany('App\Order');
     // }
-
 }

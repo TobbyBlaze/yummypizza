@@ -13,7 +13,7 @@ const HeaderHome = () => (
             <div className="row">
                 <div className="col-lg-3">
                     <div className="header__logo">
-                        <Link to="./index.html"><img src="img/logo.png" alt="" /></Link>
+                        <Link to=""><img src="img/logo.png" alt="" /></Link>
                     </div>
                 </div>
                 <div className="col-lg-6">
@@ -25,8 +25,8 @@ const HeaderHome = () => (
                             <span>Hello user</span>
                             <div className="dropdown-content">
                                 <ul className="header__menu__dropdown">
-                                    <li><Link to="/login">Log in</Link></li>
-                                    <li><Link to="/signup">Sign up</Link></li>
+                                    <li><Link to="/yummypizza/public/login">Log in</Link></li>
+                                    <li><Link to="/yummypizza/public/signup">Sign up</Link></li>
                                 </ul>
                             </div>
                         </div>

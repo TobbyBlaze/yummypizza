@@ -13,22 +13,28 @@ export default class Signout extends Component {
         e.preventDefault()
         console.log(this.state)
         // console.log($('meta[name="csrf-token"]').attr('content'))
-        // var a=localStorage.getItem("authen");
+        var a=localStorage.getItem("authen");
+        // var a=null;
+        // console.log(a);
+        // window.location.href = "/yummypizza/public"
         // console.log(a)
 
         axios
-            // .get('http://127.0.0.1:8000/api/auth/logout',{
-                .get('https://damp-island-72638.herokuapp.com/api/auth/logout',{
+            .get('http://localhost/yummypizza/public/api/auth/logout',{
+                // .get('https://damp-island-72638.herokuapp.com/api/auth/logout',{
                 headers: {
 
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    // 'Authorization': 'Bearer '+a,
+                    'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })
             .then(response => {
-                console.log(response)
+                console.log(response);
+                var a=null;
+                console.log(a);
+                window.location.href = "/yummypizza/public"
             })
             .catch(error => {
                 console.log(error)
@@ -66,7 +72,6 @@ export default class Signout extends Component {
     render() {
         return (
             <div>
-                <h1>Sign out</h1>
                 <form onSubmit={this.submitHandler}>
                     <button type="submit">Sign out</button>
                 </form>
