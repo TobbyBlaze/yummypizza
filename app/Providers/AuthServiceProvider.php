@@ -31,6 +31,6 @@ class AuthServiceProvider extends ServiceProvider
 
         // Passport::loadKeysFrom('/secret-keys/oauth');
         // Passport::loadKeysFrom($path);
-        Passport::loadKeysFrom('/storage');
+        // Passport::loadKeysFrom('/storage');
     }
 }
