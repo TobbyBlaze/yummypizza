@@ -18,7 +18,7 @@ export default class AppHome extends Component {
                     {/* <HeaderHome /> */}
                     <Switch>
                         <Route exact path='/yummypizza/public/' component={Home} />
-                        <Route exact path='/yummypizza/public/prdetails' component={PrDetails} />
+                        <Route exact path='/yummypizza/public/prdetails/:id' component={PrDetails} />
                         {/* <Route exact path='/yummypizza/public/signin' component={Signin} /> */}
                         {/* <Route exact path='/yummypizza/public/signup' component={Signup} /> */}
                         {/* <Route exact path='/yummypizza/public/checkout' component={Checkout} /> */}

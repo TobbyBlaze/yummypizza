@@ -30,8 +30,8 @@ class CartsController extends Controller
      */
     public function index()
     {
-        // $user = User::find(auth::user()->id);
-        $user = User::find(1);
+        $user = User::find(auth::user()->id);
+        // $user = User::find(1);
         
         // $carts = cart::orderBy('carts.updated_at', 'desc')->paginate(20);
         // $carts = cart::orderBy('carts.updated_at', 'desc')
@@ -80,15 +80,33 @@ class CartsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
 
-        $good = Good::find($id);
+        // $good = Good::find($id);
+
+        // $cart = new Cart;
+        // $cart->user_id = auth()->user()->id;
+        // $cart->good_id = $request->input('id');
+        // // $cart->user_id = 1;
+        // $cart->good_id = $good->id;
+        
+        // $cart->save();
 
         $cart = new Cart;
+        $cart->name = $request->input('name');
+        $cart->description = $request->input('description');
+        $cart->price = $request->input('price');
+        $cart->category = $request->input('category');
+        $cart->quantity = $request->input('quantity');
         $cart->user_id = auth()->user()->id;
         // $cart->user_id = 1;
-        $cart->good_id = $good->id;
+    
+        // if($extension == "jpg" || $extension == "jpeg" || $extension == "png" || $extension == "gif"){
+            // $cart->image = $filenameToStore;
+        // }
+
+        $cart->image = $request->file('file');
         
         $cart->save();
 
@@ -143,7 +161,16 @@ class CartsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $user = User::find(auth::user()->id);
+
+        $cart = Cart::find($id);
+        $cart->name = $request->input('name');
+        $cart->description = $request->input('description');
+        $cart->price = $request->input('price');
+        $cart->category = $request->input('category');
+        $cart->user_id = auth()->user()->id;
+        
+        $cart->save();
     }
 
     /**

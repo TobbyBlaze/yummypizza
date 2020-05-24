@@ -15,17 +15,27 @@ class Order extends Model
 
     protected $fillable = [
         // id,
-        name,
-        first_name,
-        last_name, 
-        country, 
-        address1, 
-        address2, 
-        city, 
-        state, 
-        zip, 
-        phone, 
-        email
+
+        'user_id',
+        // 'name',
+        // 'description',
+        // 'image',
+        // 'price',
+        // 'category',
+
+        // 'quantity',
+
+        // 'name',
+        'first_name',
+        'last_name', 
+        'country', 
+        'address1', 
+        'address2', 
+        'city', 
+        'state', 
+        'zip', 
+        'phone', 
+        'email'
     ];
 
     public function user(){

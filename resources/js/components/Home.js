@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import HeaderHome from './HeaderHome';
+import Header from './Header';
 import Footer from './Footer';
 
 export default class Home extends Component{
@@ -28,8 +29,8 @@ export default class Home extends Component{
         var a=localStorage.getItem("authen");
         axios
 
-            .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
-                // .post('https://damp-island-72638.herokuapp.com/api/storecart', this.state.good, {
+            // .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
+            .post('https://damp-island-72638.herokuapp.com/api/auth/storecart', this.state.good, {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
@@ -47,33 +48,40 @@ export default class Home extends Component{
     }
 
     componentDidMount(){
-        // this._isMounted = true;
         var a=localStorage.getItem("authen");
         axios
 
-            .get('http://localhost/yummypizza/public/api/auth', {
-                // .get('https://damp-island-72638.herokuapp.com/api', {
+            // .get('http://localhost/yummypizza/public/api/auth', {
+            .get('https://damp-island-72638.herokuapp.com/api/auth', {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
-                    // 'Authorization': 'Bearer '+${token},
-                    // 'Authorization': 'Bearer '+$accessToken,
                     'Authorization': 'Bearer '+a,
                     // 'withCredentials': true
                 }
             })
             .then(response => {
-                console.log(response.data.goods.data)
+                // console.log(response.data.goods.data)
                 this.setState({ goods: response.data.goods.data })
-                // if (this._isMounted) {
-                    // this.setState({ goods: response.data.goods.data })
-                // }
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
                 this.setState({errorMsg: 'Error retrieving data'})
             })
 
+    }
+
+    getOne(good){
+        this.setState({
+            goods:{
+            id : good.id,
+            file : good.file,
+            name : good.name,
+            description : good.description,
+            price : good.price,
+            category : good.category
+            }
+        })
     }
 
     componentWillUnmount() {
@@ -83,23 +91,13 @@ export default class Home extends Component{
         };
     }
 
-    
-
-    // componentWillUnmount() {
-    //     this._isMounted = false;
-    // }
-
     render(){
-        const { goods, errorMsg } = this.state
+        const { goods, errorMsg } = this.state;
+
         return(
             
             <div>
                 <HeaderHome />
-                {/* {goods.map(good=>
-                <div key={good.id}>
-                    {good.name}
-                </div>
-                )} */}
                 
                 {/* <!-- Categories Section Begin --> */}
                 <section className="categories">
@@ -158,7 +156,7 @@ export default class Home extends Component{
                         </div>
                         <div className="row featured__filter">
                             {goods.map((good, i)=>
-                            <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                            <div key={good.id} className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                                 <div className="featured__item">
                                     <div className="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                                         <ul className="featured__item__pic__hover">
@@ -167,11 +165,16 @@ export default class Home extends Component{
                                         </ul>
                                     </div>
                                     <div className="featured__item__text">
-                                        <div key={i}>
-                                        <h6><Link to={good.id.toString()}>{good.name}</Link></h6>
-                                        <h5>{good.price}</h5>
+                                        <div>
+                                        <Link to={"prdetails/"+good.id}>
+                                        <img src={"storage/files/images/"+good.image} alt="{image}" />
+                                        <h3>{good.name}</h3>
+                                        {/* <h6><button onClick={(e)=>this.getOne(good)}>{good.name}</button></h6> */}
+                                        <h4>{good.price}</h4>
+                                        {/* <li><a href={"api/auth/storecart/"+good.id}><i className="fa fa-shopping-cart"></i></a></li> */}
                                         
                                             {/* <li><Link to={good.name}><i className="fa fa-heart"></i></Link></li> */}
+                                        </Link>
                                         </div>
                                     </div>
                                 </div>

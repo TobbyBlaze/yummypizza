@@ -142,24 +142,15 @@ class GoodsController extends Controller
 
         $goods = Good::all();
 
-        // Good::where('id', '=', $id)
-        // ->update([
-        //     // Increment the view counter field
-        //     'views' => 
-        //     $good->views + 1        ,
-        //     // Prevent the updated_at column from being refreshed every time there is a new view
-        //     'updated_at' => \DB::raw('updated_at')   
-        // ]);
-
         $reviews = Review::orderBy('reviews.updated_at', 'desc')
         ->paginate(20);
 
         $good_data = [
-            'good' => '$good',
-            'goods' => '$goods',
+            'good' => $good,
+            'goods' => $goods,
             // 'user' => '$user',
-            'users' => '$users',
-            'reviews' => '$reviews',
+            // 'users' => $users,
+            'reviews' => $reviews,
         ];
 
         return response()->json($good_data);

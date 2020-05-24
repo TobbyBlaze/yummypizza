@@ -11,17 +11,14 @@ export default class Signout extends Component {
 
     submitHandler = e => {
         e.preventDefault()
-        console.log(this.state)
+        // console.log(this.state)
         // console.log($('meta[name="csrf-token"]').attr('content'))
         var a=localStorage.getItem("authen");
-        // var a=null;
-        // console.log(a);
-        // window.location.href = "/yummypizza/public"
-        // console.log(a)
+        
 
         axios
-            .get('http://localhost/yummypizza/public/api/auth/logout',{
-                // .get('https://damp-island-72638.herokuapp.com/api/auth/logout',{
+            // .get('http://localhost/yummypizza/public/api/auth/logout',{
+            .get('https://damp-island-72638.herokuapp.com/api/auth/logout',{
                 headers: {
 
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -31,43 +28,15 @@ export default class Signout extends Component {
                 }
             })
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 var a=null;
-                console.log(a);
-                window.location.href = "/yummypizza/public"
+                // console.log(a);
+                window.location.href = "https://damp-island-72638.herokuapp.com"
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
             })
     }
-
-    // componentDidMount(){
-
-        // Axios.post("http://127.0.0.1:8000/api/auth/signup")
-
-        // axios({
-        //     method: 'post',
-        //     url: 'http://127.0.0.1:8000/api/auth/signup',
-        //     data: {
-        //         name: '',
-        //         first_name: '',
-        //         last_name: '',
-        //         reg_no: '',
-        //         email: '',
-        //         password: '',
-        //         confirm_password: '',
-        //         phone_number_1: '',
-        //     }
-        // });
-
-        // axios.post("http://127.0.0.1:8000/api/auth/signup", this.state.user)
-        // .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-    // }
 
     render() {
         return (

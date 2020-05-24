@@ -86,8 +86,9 @@ export default class Footer extends Component{
                             <div className="col-lg-12">
                                 <div className="footer__copyright">
                                     <div className="footer__copyright__text"><p>
+                                    Copyright &copy;2020 All rights reserved. Yummy Pizza
                                         {/* <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> */}
-            Copyright &copy;2020 All rights reserved | This template is made with <i className="fa fa-heart" aria-hidden="true"></i> by <Link to="https://colorlib.com" target="_blank">Colorlib</Link>
+            {/* Copyright &copy;2020 All rights reserved | This template is made with <i className="fa fa-heart" aria-hidden="true"></i> by <Link to="https://colorlib.com" target="_blank">Colorlib</Link> */}
             {/* <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> */}
                                 </p></div>
                                     <div className="footer__copyright__payment"><img src="img/payment-item.png" alt="" /></div>

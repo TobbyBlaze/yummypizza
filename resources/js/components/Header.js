@@ -14,7 +14,7 @@ const Header = () => (
             <div className="row">
                 <div className="col-lg-3">
                     <div className="header__logo">
-                        <Link to=""><img src="img/logo.png" alt="" /></Link>
+                        <Link to=""><img src="img/logo.png" width="100" alt="" /></Link>
                     </div>
                 </div>
                 <div className="col-lg-6">
@@ -26,8 +26,9 @@ const Header = () => (
                             <span>Hello user</span>
                             <div className="dropdown-content">
                                 <ul className="header__menu__dropdown">
-                                    <li><Link to="/yummypizza/public/shcart">Shoping Cart</Link></li>
-                                    <li><Link to="/yummypizza/public/checkout">Check Out</Link></li>
+                                    <li><Link to="/">Home</Link></li>
+                                    <li><Link to="/shcart">Shoping Cart</Link></li>
+                                    <li><Link to="/checkout">Check Out</Link></li>
                                     <li>
                                         <Signout />
                                     </li>
@@ -38,7 +39,21 @@ const Header = () => (
                 </div>
             </div>
             <div className="humberger__open">
-                <i className="fa fa-bars"></i>
+                {/* <i className="fa fa-bars"> */}
+                <div className="dropdown">
+                    <span><i className="fa fa-bars"></i></span>
+                        <div className="dropdown-content">
+                            <ul className="header__menu__dropdown">
+                                <li><Link to="/">Home</Link></li>
+                                <li><Link to="/shcart">Shoping Cart</Link></li>
+                                <li><Link to="/checkout">Check Out</Link></li>
+                                <li>
+                                    <Signout />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {/* </i> */}
             </div>
         </div>
     </header>

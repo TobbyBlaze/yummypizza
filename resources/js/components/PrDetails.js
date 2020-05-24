@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
-import HeaderHome from './HeaderHome';
+import HeaderDet from './HeaderDet';
+import Header from './Header';
 import Footer from './Footer';
 
 export default class PrDetails extends Component{
@@ -19,18 +20,38 @@ export default class PrDetails extends Component{
                 description : '',
                 price : '',
                 category : '',
+                quantity : '',
             },
-            errorMsg: ''
+            cart: {
+                file : '',
+                name : '',
+                description : '',
+                price : '',
+                category : '',
+                quantity : '',
+            },
+            errorMsg: '',
             
         }
     }
 
-    addCart = () => {
+    changeHandler = e => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    addCart = (e) => {
+        e.preventDefault()
         var a=localStorage.getItem("authen");
+        // console.log("All states");
+        // console.log(this.state);
         axios
 
-            .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, {
-                // .post('https://damp-island-72638.herokuapp.com/api/auth/storecart', this.state.good, {
+            // .post('http://localhost/yummypizza/public/api/auth/storecart', this.state.good, 
+            .post('https://damp-island-72638.herokuapp.com/api/auth/storecart', this.state.good,
+            {
+                params: {
+                    quantity: this.state.quantity,
+                },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
@@ -39,24 +60,24 @@ export default class PrDetails extends Component{
                 }
             })
             .then(response => {
-                console.log(response.data.goods.data)
-                this.setState({ goods: response.data.goods.data })
-                // if (this._isMounted) {
-                    // this.setState({ goods: response.data.goods.data })
-                // }
+                // console.log("Cart data");
+                // console.log(response.data);
+                this.setState({ cart: response.data })
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
                 this.setState({errorMsg: 'Error retrieving data'})
             })
     }
 
     componentDidMount(){
         var a=localStorage.getItem("authen");
+        const { match: { params } } = this.props;
         axios
 
-            .get('http://localhost/yummypizza/public/api/auth/prdetails/', {
-                // .get('https://damp-island-72638.herokuapp.com/api/prdetails/', {
+            // .get('http://localhost/yummypizza/public/api/auth/prdetails/'+this.props.match.params.id, {
+            .get('https://damp-island-72638.herokuapp.com/api/auth/prdetails/'+this.props.match.params.id, {
+                
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
@@ -65,35 +86,35 @@ export default class PrDetails extends Component{
                 }
             })
             .then(response => {
-                console.log(response.data.goods.data)
-                this.setState({ goods: response.data.goods.data })
-                // if (this._isMounted) {
-                    // this.setState({ goods: response.data.goods.data })
-                // }
+                // console.log(response.data.good)
+                this.setState({ good: response.data.good })
+                
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
                 this.setState({errorMsg: 'Error retrieving data'})
             })
 
     }
 
     render(){
-        const { goods, errorMsg } = this.state
+        const { good, errorMsg } = this.state;
+        const { quantity } = this.state.good;
+        
         return(
             <div>
-                <HeaderHome />
+                <HeaderDet />
                 {/* <!-- Breadcrumb Section Begin --> */}
                 <section className="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12 text-center">
                                 <div className="breadcrumb__text">
-                                    <h2>Vegetable’s Package</h2>
+                                    <h2>{good.name} Package</h2>
                                     <div className="breadcrumb__option">
-                                        <Link to="./index.html">Home</Link>
-                                        <Link to="./index.html">Vegetables</Link>
-                                        <span>Vegetable’s Package</span>
+                                        <Link to="./">Home</Link>
+                                        <Link to="">{good.name}</Link>
+                                        <span>{good.name} Package</span>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +147,8 @@ export default class PrDetails extends Component{
                             </div>
                             <div className="col-lg-6 col-md-6">
                                 <div className="product__details__text">
-                                    <h3>Vetgetable’s Package</h3>
+                                    <h3>{good.name} Package</h3>
+                                    <img src={"../storage/files/images/"+good.image} alt="{image}" />
                                     <div className="product__details__rating">
                                         <i className="fa fa-star"></i>
                                         <i className="fa fa-star"></i>
@@ -135,19 +157,21 @@ export default class PrDetails extends Component{
                                         <i className="fa fa-star-half-o"></i>
                                         <span>(18 reviews)</span>
                                     </div>
-                                    <div className="product__details__price">$50.00</div>
-                                    <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                                        vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                                        quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
-                                    <div className="product__details__quantity">
-                                        <div className="quantity">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1" />
+                                    <div className="product__details__price">${good.price}</div>
+                                    <p>{good.description}</p>
+                                    <form onSubmit={this.addCart} >
+                                        <div className="product__details__quantity">
+                                            <div className="quantity">
+                                                <div className="pro-qty">
+                                                <input type="number" name="quantity" value={quantity} placeholder="Qty" onChange={this.changeHandler} />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <Link to="#" className="primary-btn">ADD TO CARD</Link>
-                                    <Link to="#" className="heart-icon"><span className="icon_heart_alt"></span></Link>
+                                    
+                                        
+                                        <button type="submit" className="primary-btn">ADD TO CART</button>
+                                    </form>
+                                    <Link to="" className="heart-icon"><span className="icon_heart_alt"></span></Link>
                                     <ul>
                                         <li><b>Availability</b> <span>In Stock</span></li>
                                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
@@ -183,63 +207,10 @@ export default class PrDetails extends Component{
                                         <div className="tab-pane active" id="tabs-1" role="tabpanel">
                                             <div className="product__details__tab__desc">
                                                 <h6>Products Infomation</h6>
-                                                <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                                    suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                                    vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                                    Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                                    accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                                    pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                                    elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                                    et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                                    vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                                    Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                                    porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                                    sed sit amet dui. Proin eget tortor risus.</p>
+                                                <p>{good.description}</p>
                                             </div>
                                         </div>
-                                        <div className="tab-pane" id="tabs-2" role="tabpanel">
-                                            <div className="product__details__tab__desc">
-                                                <h6>Products Infomation</h6>
-                                                <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                                    Proin eget tortor risus.</p>
-                                                <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                                    ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                                    elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                                    porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                                    nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
-                                            </div>
-                                        </div>
-                                        <div className="tab-pane" id="tabs-3" role="tabpanel">
-                                            <div className="product__details__tab__desc">
-                                                <h6>Products Infomation</h6>
-                                                <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                                    Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                                    Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                                    sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                                    eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                                    Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                                    sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                                    diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                                    Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                                    Proin eget tortor risus.</p>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +250,7 @@ export default class PrDetails extends Component{
                 </section>
                 {/* <!-- Related Product Section End --> */}
 
-                            
+                <Footer />
             </div>
         )
     }

@@ -29,55 +29,23 @@ export default class Signup extends Component {
 
         axios
             // .post('localhost/yummypizza/public/api/auth/signup', this.state)
-            .post('http://localhost/yummypizza/public/api/auth/signup', this.state
-            // .post('https://damp-island-72638.herokuapp.com/api/auth/signup', this.state)
+            // .post('http://localhost/yummypizza/public/api/auth/signup', this.state
+            .post('https://damp-island-72638.herokuapp.com/api/auth/signup', this.state
             , {
                 headers: {
 
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    // 'X-CSRF-TOKEN': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
                     'Content-Type': 'application/json',
-                    // 'x-rapidapi-host': 'covid-193.p.rapidapi.com',
-                    // 'x-rapidapi-key': '8cfca8918dmsh742a6ebe24cf1c7p1af6e3jsn3bfa6e435b76',
-                    // 'Authorization': 'Bearer '+a,
-                    // 'withCredentials': true
                 }
             })
             .then(response => {
-                console.log(response)
+                // console.log(response)
+                window.location.href = "https://damp-island-72638.herokuapp.com/login"
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
             })
     }
-
-    // componentDidMount(){
-
-        // Axios.post("http://127.0.0.1:8000/api/auth/signup")
-
-        // axios({
-        //     method: 'post',
-        //     url: 'http://127.0.0.1:8000/api/auth/signup',
-        //     data: {
-        //         name: '',
-        //         first_name: '',
-        //         last_name: '',
-        //         reg_no: '',
-        //         email: '',
-        //         password: '',
-        //         confirm_password: '',
-        //         phone_number_1: '',
-        //     }
-        // });
-
-        // axios.post("http://127.0.0.1:8000/api/auth/signup", this.state.user)
-        // .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-    // }
 
     render() {
         const { id, name, last_name, email, password, confirm_password } = this.state
@@ -122,7 +90,7 @@ export default class Signup extends Component {
                                     </button>
                                 </div>
                                 <br />
-                                <h6>You already have an account? <Link to="/yummypizza/public/login">Log in</Link> </h6>
+                                <h6>You already have an account? <Link to="/login">Log in</Link> </h6>
 
 
                             </form>

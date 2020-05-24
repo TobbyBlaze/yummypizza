@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 
-import Header from './Header';
+import HeaderDet from './HeaderDet';
 import Footer from './Footer';
 
 export default class Checkout extends Component{
@@ -11,8 +11,11 @@ export default class Checkout extends Component{
         super(props);
 
         this.state = {
-            id: '',
-            name: '',
+            carts: [],
+            total: '',
+            subtotal: '',
+            // id: '',
+            // name: '',
             first_name: '',
             last_name: '', 
             country: '', 
@@ -31,17 +34,28 @@ export default class Checkout extends Component{
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    submitHandler = e => {
+    order = e => {
         e.preventDefault()
-        console.log(this.state)
+        var a=localStorage.getItem("authen");
+        console.log("All states");
+        console.log(this.state);
 
         axios
-            // .post('http://localhost/yummypizza/public/api/auth/login', this.state)
-            .post('https://damp-island-72638.herokuapp.com/api/auth/checkout', this.state)
+            // .post('http://localhost/yummypizza/public/api/auth/order', this.state,
+            .post('https://damp-island-72638.herokuapp.com/api/auth/order', this.state,
+            {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+a,
+                    // 'withCredentials': true
+                }
+            })
             .then(response => {
-                console.log(response);
-                
-                // var sub = true;
+                console.log("response");
+                console.log(response)
+                // this.setState({ order: response.data.cart.data })
+                window.location.href = "https://damp-island-72638.herokuapp.com/thanks"
             })
             .catch(error => {
                 console.log(error)
@@ -50,14 +64,41 @@ export default class Checkout extends Component{
 
 
     componentDidMount(){
-        //
+        var a=localStorage.getItem("authen");
+        // const { match: { params } } = this.props;
+        axios
+
+            // .get('http://localhost/yummypizza/public/api/auth/shcart', {
+            .get('https://damp-island-72638.herokuapp.com/api/auth/shcart', {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+a,
+                    // 'withCredentials': true
+                }
+            })
+            .then(response => {
+                console.log(response.data.carts.data);
+                this.setState({ carts: response.data.carts.data });
+                var c = this.state.carts.map((cart, i)=> cart.price);
+                var sum = c.reduce(function(a,b){return a+b;})
+                this.setState({ subtotal: sum });
+                this.setState({ total: sum });
+                console.log(sum);
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({errorMsg: 'Error retrieving data'})
+            })
+
     }
 
     render(){
-        const { name,first_name, last_name, country, address1, address2, city, state, zip, phone, email } = this.state
+        const { subtotal, total, carts, first_name, last_name, country, address1, address2, city, state, zip, phone, email } = this.state
+        
         return(
             <div>
-                <Header />
+                <HeaderDet />
                 
                 {/* <!-- Breadcrumb Section Begin --> */}
                 <section className="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
@@ -87,8 +128,8 @@ export default class Checkout extends Component{
                             </div>
                         </div>
                         <div className="checkout__form">
-                            <h4>Billing Details</h4>
-                            <form onSubmit={this.submitHandler}>
+                            <h4>Billing Details </h4>
+                            <form onSubmit={this.order}>
                                 <div className="row">
                                     <div className="col-lg-8 col-md-6">
                                         <div className="row">
@@ -143,19 +184,21 @@ export default class Checkout extends Component{
                                         
                                     </div>
                                     <div className="col-lg-4 col-md-6">
+                                        
                                         <div className="checkout__order">
                                             <h4>Your Order</h4>
                                             <div className="checkout__order__products">Products <span>Total</span></div>
                                             <ul>
-                                                <li>Vegetable’s Package <span>$75.99</span></li>
-                                                <li>Fresh Vegetable <span>$151.99</span></li>
-                                                <li>Organic Bananas <span>$53.99</span></li>
+                                                {carts.map((cart, i)=>
+                                                <li key={cart.id} >{cart.name} <span>${cart.price}</span></li>
+                                                )}
                                             </ul>
-                                            <div className="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                                            <div className="checkout__order__total">Total <span>$750.99</span></div>
+                                            <div className="checkout__order__subtotal">Subtotal <span>${parseInt(subtotal)}</span></div>
+                                            <div className="checkout__order__total">Total <span>${parseInt(total)} </span></div>
                                             
                                             <button type="submit" className="site-btn">PLACE ORDER</button>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </form>
@@ -168,6 +211,8 @@ export default class Checkout extends Component{
         )
     }
 }
+
+
 
 if (document.getElementById('checkout')) {
     ReactDOM.render(<Checkout />, document.getElementById('checkout'));

@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 
-import Header from './Header';
+import HeaderDet from './HeaderDet';
 import Footer from './Footer';
 
 export default class ShCart extends Component{
@@ -13,44 +13,95 @@ export default class ShCart extends Component{
         this.state = {
             
             carts: [],
+            subprice: '',
+            price: '',
+            
+            subtotal: '',
+            tootal: '',
+
+            order: {
+                // file : '',
+                cart_id: '',
+                name : '',
+                description : '',
+                subprice: '',
+                price : '',
+                category : '',
+                quantity : '',
+            },
             errorMsg: ''
             
         }
     }
 
-    componentDidMount(){
+    check = e => {
+        e.preventDefault()
         var a=localStorage.getItem("authen");
-        axios
+        // console.log(this.state);
 
-            .get('http://localhost/yummypizza/public/api/auth/shcart', {
-                // .get('https://damp-island-72638.herokuapp.com/api/auth/shcart', {
+        axios
+            // .post('http://localhost/yummypizza/public/api/auth/order', this.state,
+            .post('https://damp-island-72638.herokuapp.com/api/auth/order', this.state,
+            {
+               
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer '+a,
-                    // 'Authorization': 'Bearer '.$accessToken,
                     // 'withCredentials': true
                 }
             })
             .then(response => {
-                console.log(response.data.goods.data)
-                this.setState({ goods: response.data.goods.data })
-                // if (this._isMounted) {
-                    // this.setState({ goods: response.data.goods.data })
-                // }
+                // console.log(response)
             })
             .catch(error => {
-                console.log(error)
+                // console.log(error)
+            })
+    }
+
+    componentDidMount(){
+        var a=localStorage.getItem("authen");
+        // const { match: { params } } = this.props;
+        axios
+
+            // .get('http://localhost/yummypizza/public/api/auth/shcart', {
+            .get('https://damp-island-72638.herokuapp.com/api/auth/shcart', {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+a,
+                    // 'withCredentials': true
+                }
+            })
+            .then(response => {
+                // console.log(response.data.carts.data);
+                this.setState({ carts: response.data.carts.data });
+                var c = this.state.carts.map((cart, i)=> cart.price);
+                var q = this.state.carts.map((cart, i)=> cart.quantity);
+                var sum = parseInt(c) * parseInt(q);
+                // var subprice = cart.subprice;
+                // var price = cart.price;
+                // this.setState({ subprice: c });
+                // this.setState({ price: sum });
+
+                // console.log(sum)
+                // console.log(q)
+                // console.log(c);
+            })
+            .catch(error => {
+                // console.log(error)
                 this.setState({errorMsg: 'Error retrieving data'})
             })
 
     }
 
     render(){
-        const { carts, errorMsg } = this.state
+        const { carts, errorMsg, subtotal, total } = this.state;
+        const { id, subprice, cart_id, name, description, price, category, quantity } = this.state;
+        
         return(
             <div>
-                <Header />
+                <HeaderDet />
                 
                 {/* <!-- Breadcrumb Section Begin --> */}
                 <section className="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
@@ -60,7 +111,7 @@ export default class ShCart extends Component{
                                 <div className="breadcrumb__text">
                                     <h2>Shopping Cart</h2>
                                     <div className="breadcrumb__option">
-                                        <Link to="./index.html">Home</Link>
+                                        <Link to="">Home</Link>
                                         <span>Shopping Cart</span>
                                     </div>
                                 </div>
@@ -73,77 +124,71 @@ export default class ShCart extends Component{
                 {/* <!-- Shoping Cart Section Begin --> */}
                 <section className="shoping-cart spad">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="shoping__cart__table">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th className="shoping__product">Products</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th>Total</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td className="shoping__cart__item">
-                                                    <img src="img/cart/cart-1.jpg" alt="" />
-                                                    <h5>Vegetable’s Package</h5>
-                                                </td>
-                                                <td className="shoping__cart__price">
-                                                    $55.00
-                                                </td>
-                                                <td className="shoping__cart__quantity">
-                                                    <div className="quantity">
-                                                        <div className="pro-qty">
-                                                            <input type="text" value="1" />
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="shoping__cart__total">
-                                                    $110.00
-                                                </td>
-                                                <td className="shoping__cart__item__close">
-                                                    <span className="icon_close"></span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="shoping__cart__btns">
-                                    <Link to="#" className="primary-btn cart-btn">CONTINUE SHOPPING</Link>
-                                    <Link to="#" className="primary-btn cart-btn cart-btn-right"><span className="icon_loading"></span>
-                                        Upadate Cart</Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-6">
-                                <div className="shoping__continue">
-                                    <div className="shoping__discount">
-                                        <h5>Discount Codes</h5>
-                                        <form action="#">
-                                            <input type="text" placeholder="Enter your coupon code" />
-                                            <button type="submit" className="site-btn">APPLY COUPON</button>
-                                        </form>
+                        {/* <form onSubmit={this.check} encType="multipart/form-data" > */}
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="shoping__cart__table">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th className="shoping__product">Products</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {carts.map((cart, i)=>
+                                                <tr key={cart.id}>
+                                                    <td className="shoping__cart__item">
+                                                        <img src="img/cart/cart-1.jpg" alt="" />
+                                                        <h5> {cart.name} </h5>
+                                                    </td>
+                                                    <td className="shoping__cart__price">
+                                                        ${cart.price}
+                                                        {/* ${subprice} */}
+                                                    </td>
+                                                    <td className="shoping__cart__total">
+                                                        {cart.quantity}
+                                                        {/* {price} */}
+                                                    </td>
+                                                    <td className="shoping__cart__item__close">
+                                                        {parseInt(cart.price) * parseInt(cart.quantity)}
+                                                    </td>
+                                                </tr>
+                                                )}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-6">
-                                <div className="shoping__checkout">
-                                    <h5>Cart Total</h5>
-                                    <ul>
-                                        <li>Subtotal <span>$454.98</span></li>
-                                        <li>Total <span>$454.98</span></li>
-                                    </ul>
-                                    <Link to="#" className="primary-btn">PROCEED TO CHECKOUT</Link>
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="shoping__cart__btns">
+                                        <Link to="/" className="primary-btn cart-btn">CONTINUE SHOPPING</Link>
+                                        <Link to="" className="primary-btn cart-btn cart-btn-right"><span className="icon_loading"></span>
+                                            Update Cart</Link>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6">
+                                    <div className="shoping__continue">
+                                        <div className="shoping__discount">
+                                            <h5>Discount Codes</h5>
+                                            {/* <form action="#"> */}
+                                                <input type="text" placeholder="Enter your coupon code" />
+                                                <button className="site-btn">APPLY COUPON</button>
+                                            {/* </form> */}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6">
+                                    <div className="shoping__checkout">
+                                        <Link to="/checkout" className="primary-btn">PROCEED TO CHECKOUT</Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {/* </form> */}
                     </div>
                 </section>
                 {/* <!-- Shoping Cart Section End --> */}

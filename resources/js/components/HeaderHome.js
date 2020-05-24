@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 const HeaderHome = () => (
     <div>
-    <div id="preloder">
+    {/* <div id="preloder">
         <div className="loader"></div>
-    </div>
+    </div> */}
 
     <header className="header">
         
@@ -13,7 +13,7 @@ const HeaderHome = () => (
             <div className="row">
                 <div className="col-lg-3">
                     <div className="header__logo">
-                        <Link to=""><img src="img/logo.png" alt="" /></Link>
+                        <Link to=""><img src="img/logo.png" width="100" alt="" /></Link>
                     </div>
                 </div>
                 <div className="col-lg-6">
@@ -25,8 +25,9 @@ const HeaderHome = () => (
                             <span>Hello user</span>
                             <div className="dropdown-content">
                                 <ul className="header__menu__dropdown">
-                                    <li><Link to="/yummypizza/public/login">Log in</Link></li>
-                                    <li><Link to="/yummypizza/public/signup">Sign up</Link></li>
+                                    <li><Link to="/login">Log in</Link></li>
+                                    <li><Link to="/signup">Sign up</Link></li>
+                                    <li><Link to="/shcart">Shoping Cart</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -34,7 +35,18 @@ const HeaderHome = () => (
                 </div>
             </div>
             <div className="humberger__open">
-                <i className="fa fa-bars"></i>
+                {/* <i className="fa fa-bars"> */}
+                <div className="dropdown">
+                    <span><i className="fa fa-bars"></i></span>
+                        <div className="dropdown-content">
+                            <ul className="header__menu__dropdown">
+                                <li><Link to="/login">Log in</Link></li>
+                                <li><Link to="/signup">Sign up</Link></li>
+                                <li><Link to="/shcart">Shoping Cart</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                {/* </i> */}
             </div>
         </div>
     </header>
