@@ -31,3 +31,4 @@ require('./components/PrDetails');
 require('./components/Checkout');
 // require('./components/Error');
 require('./components/Thanks');
+require('./components/Admine');

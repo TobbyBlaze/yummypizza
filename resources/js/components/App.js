@@ -12,6 +12,7 @@ import Signup from './Signup';
 // import Footer from './Footer';
 // import Error from './Error';
 import Thanks from './Thanks';
+import Admine from './Admine';
 
 export default class App extends Component {
     render() {
@@ -38,6 +39,7 @@ export default class App extends Component {
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/signup' component={Signup} />
                         <Route exact path='/thanks' component={Thanks} />
+                        <Route exact path='/admine' component={Admine} />
                     </Switch>
                     {/* <Footer /> */}
                 </div>
