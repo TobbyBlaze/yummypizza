@@ -54,7 +54,7 @@ export default class Admine extends Component {
     }
 
     render() {
-        // const { email, password } = this.state
+        const { file, name, description, price, category } = this.state;
         return (
             <div>
                 <div className="limiter">
@@ -74,7 +74,7 @@ export default class Admine extends Component {
                                 </div>
 
                                 <div className="wrap-input100 validate-input" data-validate="Enter password">
-                                    <input className="input100" type="text" name="description" placeholder="Password" value={description} onChange={this.changeHandler}  />
+                                    <input className="input100" type="text" name="description" placeholder="description" value={description} onChange={this.changeHandler}  />
                                     <span className="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
 
