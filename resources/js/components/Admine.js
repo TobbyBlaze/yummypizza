@@ -22,7 +22,7 @@ export default class Admine extends Component {
     }
 
     fileHandler = (event) => {
-        this.setState({file: URL.createObjectURL(file)});
+        this.setState({file: URL.createObjectURL(event.target.files[0])});
     }
 
     submitHandler = e => {
